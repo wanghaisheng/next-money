@@ -81,8 +81,8 @@ export function constructMetadata({
   };
 }
 
-export function formatDate(input: string | number): string {
-  const date = new Date(input);
+export function formatDate(input: Date | string): string {
+  const date = typeof input === "string" ? new Date(input) : input;
   return date.toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
@@ -97,9 +97,8 @@ export function absoluteUrl(path: string) {
 // Utils from precedent.dev
 export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
   if (!timestamp) return "never";
-  return `${ms(Date.now() - new Date(timestamp).getTime())}${
-    timeOnly ? "" : " ago"
-  }`;
+  return `${ms(Date.now() - new Date(timestamp).getTime())}${timeOnly ? "" : " ago"
+    }`;
 };
 
 export async function fetcher<JSON = any>(
@@ -204,6 +203,8 @@ const RatioAspect = {
   [Ratio.r3]: "aspect-[9/16]",
   [Ratio.r4]: "aspect-[3/2]",
   [Ratio.r5]: "aspect-[2/3]",
+  [Ratio.r6]: "aspect-[1/2]",
+  [Ratio.r7]: "aspect-[3/4]",
 };
 
 export function createRatio(ratio: Ratio) {
